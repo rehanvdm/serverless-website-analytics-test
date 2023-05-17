@@ -8,7 +8,11 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "diff": "cdk diff --profile rehan-demo-exported",
+    "deploy": "cdk deploy --profile rehan-demo-exported",
+    "destroy": "cdk destroy * --profile rehan-demo-exported",
+    "install-swa-construct-locally": "npm uninstall rehan-projen-test && npm install /Users/rehanvandermerwe/Rehan/rehan-projen-test/dist/js/serverless-website-analytics@0.0.0.jsii.tgz"
   },
   "devDependencies": {
     "@types/jest": "^29.5.1",
