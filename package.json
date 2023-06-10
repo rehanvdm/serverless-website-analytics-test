@@ -28,7 +28,7 @@
   "dependencies": {
     "aws-cdk-lib": "2.79.1",
     "constructs": "10.0.5",
-    "serverless-website-analytics": "^0.0.4",
+    "serverless-website-analytics": "^0.0.8",
     "source-map-support": "^0.5.21"
   }
 }

@@ -2,8 +2,9 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as cert from 'aws-cdk-lib/aws-certificatemanager';
 import * as route53 from 'aws-cdk-lib/aws-route53';
+import * as sns from 'aws-cdk-lib/aws-sns';
 // import {Swa} from "serverless-website-analytics/src"; // For the npm linked package one while testing
-import { Swa } from 'serverless-website-analytics'; // For using the published package
+import {AllAlarmTypes, Swa} from 'serverless-website-analytics';
 
 export class App extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -15,6 +16,13 @@ export class App extends cdk.Stack {
     const wildCardCertUsEast1 = cert.Certificate.fromCertificateArn(this, 'Cert',
         'arn:aws:acm:us-east-1:581184285249:certificate/62ff8b37-6710-4838-999a-7d7676a068ae');
 
+    const alarmTopic = new sns.Topic(this, "alarm-topic");
+    new sns.Subscription(this, "alarm-topic-subscription", {
+      topic: alarmTopic,
+      protocol: sns.SubscriptionProtocol.EMAIL,
+      endpoint: 'rehan.vdm4@gmail.com',
+    });
+
     new Swa(this, 'swa-demo', {
       environment: 'prod',
       awsEnv: {
@@ -22,9 +30,7 @@ export class App extends cdk.Stack {
         region: this.region,
       },
       sites: [
-        'example.com',
-        'tests1',
-        'tests2',
+        'simulated',
       ],
 
       allowedOrigins: ['*'],
@@ -64,6 +70,16 @@ export class App extends cdk.Stack {
           hostedZoneId: 'Z00387321EPPVXNC20CIS',
           zoneName: 'demo.serverless-website-analytics.com',
         }),
+        trackOwnDomain: true,
+      },
+      isDemoPage: true, /* Do not specify for your dashboard */
+
+      observability: {
+        dashboard: true,
+        alarms: {
+          alarmTopic,
+          alarmTypes: AllAlarmTypes
+        },
       }
     });
 
