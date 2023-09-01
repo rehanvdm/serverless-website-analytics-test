@@ -64,7 +64,7 @@ export class App extends cdk.Stack {
       /* Optional, if not specified uses default CloudFront and Cognito domains */
       domain: {
         name: 'demo.serverless-website-analytics.com',
-        certificate: wildCardCertUsEast1,
+        usEast1Certificate: wildCardCertUsEast1,
         /* Optional, if not specified then no DNS records will be created. You will have to create the DNS records yourself. */
         hostedZone: route53.HostedZone.fromHostedZoneAttributes(this, 'HostedZone', {
           hostedZoneId: 'Z00387321EPPVXNC20CIS',
