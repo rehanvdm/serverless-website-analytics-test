@@ -80,6 +80,11 @@ export class App extends cdk.Stack {
           alarmTopic,
           alarmTypes: AllAlarmTypes
         },
+      },
+      anomaly: {
+        alert: {
+          topic: alarmTopic,
+        }
       }
     });
 
